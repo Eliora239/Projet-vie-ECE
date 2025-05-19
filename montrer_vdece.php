@@ -20,16 +20,10 @@ $comments = $comments->fetchAll();
 
 $pseudo = $_SESSION['pseudo'] ?? '';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>VdECE</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="style.css" rel="stylesheet" />
-</head>
+<?php include 'header.php'; ?>
+
 <body class="container mt-4">
-  <div class="card shadow-sm fade-in">
+  <div class="card shadow-sm fade-in mb-4">
     <div class="card-body">
       <h5><?= htmlspecialchars($vdece['pseudo']) ?></h5>
       <p><?= nl2br(htmlspecialchars($vdece['content'])) ?></p>
@@ -37,11 +31,10 @@ $pseudo = $_SESSION['pseudo'] ?? '';
     </div>
   </div>
 
-  <hr />
   <h4>Commentaires</h4>
   <div id="comment-list">
     <?php foreach ($comments as $c): ?>
-      <div class="alert alert-light border fade-in">
+      <div class="alert custom-comment shadow-sm">
         <strong><?= htmlspecialchars($c['pseudo']) ?></strong><br />
         <small class="text-muted"><?= $c['date'] ?></small>
         <p><?= nl2br(htmlspecialchars($c['comment'])) ?></p>
@@ -49,51 +42,46 @@ $pseudo = $_SESSION['pseudo'] ?? '';
     <?php endforeach; ?>
   </div>
 
-  <form id="comment-form" action="http://localhost:8080/vdece-java/ajouter_commentaire" method="POST">
+  <form id="comment-form" action="ajouter_commentaire.php" method="POST" class="mt-4">
     <input type="hidden" name="vde_id" value="<?= $vdece['id'] ?>" />
-    <div class="mb-2">
-      <input name="pseudo" class="form-control" placeholder="Votre pseudo" required maxlength="50" value="<?= htmlspecialchars($pseudo) ?>" />
+    <div class="mb-3">
+      <label for="pseudo" class="form-label">Votre pseudo</label>
+      <input id="pseudo" name="pseudo" class="form-control" placeholder="Ex: Julie92" required maxlength="50" value="<?= htmlspecialchars($pseudo) ?>" />
     </div>
-    <div class="mb-2">
-      <textarea name="comment" class="form-control" placeholder="Votre commentaire" required></textarea>
+    <div class="mb-3">
+      <label for="comment" class="form-label">Votre commentaire</label>
+      <textarea id="comment" name="comment" class="form-control" placeholder="Écrivez ici votre réaction…" rows="4" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Commenter</button>
+    <button type="submit" class="btn btn-success px-4"> Publier</button>
   </form>
 
   <script>
     document.getElementById("comment-form").addEventListener("submit", async function (e) {
       e.preventDefault();
-      console.log("Formulaire soumis, envoi AJAX…");
-
       const form = this;
       const data = new FormData(form);
 
-      const servletUrl = "http://localhost:8080/vdece-java/ajouter_commentaire";
-
       try {
-        const response = await fetch(servletUrl, {
+        const response = await fetch("ajouter_commentaire.php", {
           method: "POST",
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
           body: data
         });
 
         if (!response.ok) {
-          console.error("Erreur réseau : ", response.statusText);
+          alert("Erreur réseau : " + response.statusText);
           return;
         }
 
         const html = await response.text();
-        document.getElementById("comment-list").innerHTML = html;
+        const commentList = document.getElementById("comment-list");
+        commentList.insertAdjacentHTML('afterbegin', html);
         form.reset();
       } catch (err) {
-        console.error("Erreur fetch : ", err);
+        alert("Erreur lors de l'envoi du commentaire : " + err.message);
       }
-      const response = await fetch(servletUrl, {
-  method: "POST",
-  mode: "cors",
-  body: data
-});
-
     });
   </script>
+  <?php include 'footer.php'; ?>
 </body>
 </html>

@@ -1,12 +1,26 @@
+/* Animation légère pour les éléments qui apparaissent */
 .fade-in {
   animation: fadeIn 0.6s ease-in;
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.card:hover {
-  box-shadow: 0 0.75rem 1.5rem rgba(0,0,0,0.15);
-  transform: scale(1.01);
-  transition: all 0.3s ease-in-out;
+
+/* Style pour les alertes de commentaires */
+.custom-comment {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Améliore le visuel du bouton de commentaire */
+#comment-form button {
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 10px;
 }
