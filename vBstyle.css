@@ -1,0 +1,237 @@
+/*version Baptiste */
+/* Palette de couleurs audacieuse */
+:root {
+  --primary: #6b21a8; /* Violet profond */
+  --secondary: #ec4899; /* Rose néon */
+  --accent: #14b8a6; /* Turquoise */
+  --background: #1e1e2e; /* Fond sombre */
+  --card-bg: #27272a; /* Fond des cartes */
+  --text: #ffffff; /* Texte blanc pur pour lisibilité */
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* Réinitialisation et style global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--background), #3b0764);
+  color: var(--text);
+  line-height: 1.8;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Conteneur principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Titres */
+h1, h4 {
+  font-weight: 700;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Animation d'apparition */
+.fade-in {
+  animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Style des cartes */
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 6px 24px var(--shadow);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  margin-bottom: 2rem;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--secondary), var(--accent));
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 36px var(--shadow);
+}
+
+.card-body {
+  padding: 1.5rem;
+  color: var(--text); /* Forcer le texte blanc dans le corps de la carte */
+}
+
+.card-title {
+  color: var(--text); /* Forcer le titre en blanc */
+}
+
+.card-text {
+  color: var(--text); /* Forcer le texte principal en blanc */
+}
+
+/* Style des boutons */
+.btn {
+  position: relative;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  color: var(--text); /* Texte des boutons en blanc */
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+}
+
+.btn-secondary {
+  background: linear-gradient(45deg, var(--accent), var(--secondary));
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+/* Style des formulaires */
+.form-control {
+  background: #3f3f46;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  color: var(--text); /* Texte des champs en blanc */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3);
+  transform: scale(1.02);
+}
+
+.form-control::placeholder {
+  color: #a1a1aa; /* Placeholder en gris clair pour contraste */
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Style des commentaires */
+.alert {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  border-left: 4px solid var(--accent);
+  transition: transform 0.3s ease;
+  color: var(--text); /* Texte des commentaires en blanc */
+}
+
+.alert:hover {
+  transform: translateX(5px);
+}
+
+/* Style de la pagination */
+.pagination {
+  justify-content: center;
+}
+
+.page-link {
+  background: var(--card-bg);
+  color: var(--text); /* Texte de la pagination en blanc */
+  border: none;
+  border-radius: 8px;
+  margin: 0 0.3rem;
+  transition: background 0.3s ease;
+}
+
+.page-item.active .page-link {
+  background: var(--secondary);
+  color: var(--text); /* Texte actif en blanc */
+}
+
+.page-link:hover {
+  background: var(--primary);
+  color: var(--text); /* Texte au survol en blanc */
+}
+
+/* Bouton toggle */
+.toggle-btn {
+  margin-bottom: 2rem;
+}
+
+/* Style des liens */
+a {
+  color: var(--accent); /* Liens en turquoise pour contraste */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--secondary); /* Liens en rose néon au survol */
+}
+
+/* Style des petits textes (dates, etc.) */
+.text-muted {
+  color: #a1a1aa !important; /* Gris clair pour les dates */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .card {
+    margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}
